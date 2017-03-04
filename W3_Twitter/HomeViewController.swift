@@ -85,16 +85,26 @@ class HomeViewController: UIViewController {
         self.performSegue(withIdentifier: "composeSegue", sender: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+//        if segue.identifier == "detailsSegue" {
+//            let indexPath = self.tweetsTable.indexPathForSelectedRow?.row
+//            if let detailsVc = segue.destination as? DetailsViewController{
+//                detailsVc.tweet = tweets[indexPath!]
+//                print(tweets[indexPath!])
+//            }
+//        }
+        let navigationController = segue.destination as! UINavigationController
+        if navigationController.topViewController is DetailsViewController {
+            let detailViewController = navigationController.topViewController as! DetailsViewController
+            //detailViewController.delegate = self
+            
+            var indexPath: AnyObject!
+            indexPath = tweetsTable.indexPath(for: sender as! UITableViewCell) as AnyObject!
+            
+            detailViewController.tweet = tweets[indexPath!.row]
+            detailViewController.indexPath = indexPath! as? NSIndexPath
+        }
     }
-    */
-
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
@@ -106,9 +116,5 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tweetsTable.dequeueReusableCell(withIdentifier: "tweetsCell") as! TweetsCell
         cell.tweet = self.tweets[indexPath.row]
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //self.performSegue(withIdentifier: "tweetdetailsSegue", sender: tweets[indexPath.row].id)
     }
 }

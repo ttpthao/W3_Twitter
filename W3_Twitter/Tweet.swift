@@ -14,9 +14,12 @@ class Tweet: NSObject {
     var createdAtString: String?
     var createdAt: Date?
     var timeSinceCreated: String?
+    var imageUrl: String?
     
-    var retweetCount = 0
-    var favCount = 0
+    var retweetCount : Int?
+    var favoriteCount: Int?
+    var isRetweeted = false
+    var isFavorited = false
     
     
     init(dictionary: NSDictionary) {
@@ -25,7 +28,7 @@ class Tweet: NSObject {
         text = dictionary["text"] as? String
         createdAtString = dictionary["created_at"] as? String
         retweetCount = (dictionary["retweet_count"] as? Int)!
-        favCount = (dictionary["favorite_count"] as? Int)!
+        favoriteCount = (dictionary["favorite_count"] as? Int)!
         
         let formatter = DateFormatter()
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
@@ -42,6 +45,14 @@ class Tweet: NSObject {
             timeSinceCreated = String(Int(elapsedTime / 60 / 60 / 24)) + "d"
         }
         
+        if let media = dictionary.value(forKeyPath: "entities.media") as? [NSDictionary] {
+            for image in media {
+                if let urlString = image["media_url"] as? String {
+                    self.imageUrl = urlString
+                }
+            }
+        }
+        
     }
     
     class func tweetsWithArray(_ array: [NSDictionary]) -> [Tweet] {
@@ -51,5 +62,14 @@ class Tweet: NSObject {
             tweets.append(Tweet(dictionary: dict))
         }
         return tweets
+    }
+    
+    func formatedDetailDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.short
+        dateFormatter.timeStyle = .short
+        let dateString = dateFormatter.string(from: createdAt!)
+        
+        return dateString
     }
 }
