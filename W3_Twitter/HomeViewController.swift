@@ -29,6 +29,10 @@ class HomeViewController: UIViewController {
         fetchData(count: 20)
         pullToRefresh()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchData(count: 20)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -77,6 +81,10 @@ class HomeViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UserDidLogout"), object: nil)
     }
 
+    @IBAction func onCompose(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "composeSegue", sender: nil)
+    }
+    
     /*
     // MARK: - Navigation
 
