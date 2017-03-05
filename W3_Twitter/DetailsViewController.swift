@@ -10,7 +10,7 @@ import UIKit
 import AFNetworking
 
 class DetailsViewController: UIViewController {
-
+    
     @IBOutlet weak var retweetIcon: UIImageView!
     @IBOutlet weak var retweetedLabel: UILabel!
     @IBOutlet weak var avaImage: UIImageView!
@@ -35,7 +35,7 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         avaImage.layer.cornerRadius = 8
         avaImage.layer.masksToBounds = true
         
@@ -53,6 +53,14 @@ class DetailsViewController: UIViewController {
         contentLabel.text = tweet.text
         avaImage.setImageWith((tweet.user?.profileImageUrl)!)
         timeLabel.text = tweet.formatedDetailDate()
+        
+        if let imageUrl = tweet.imageUrl {
+            imageView.setImageWith(URL(string: imageUrl)!)
+            imageViewHeightConstraint.constant = 130
+        }
+        else{
+            imageViewHeightConstraint.constant = 0
+        }
         
         if let tweetCount = tweet.retweetCount {
             if tweetCount > 0 {
@@ -92,23 +100,76 @@ class DetailsViewController: UIViewController {
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @IBAction func onBack(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func onRetweet(_ sender: UIButton) {
+        if tweet.isRetweeted {
+            TwitterClient.sharedInstance?.unRetweet(id: tweet.id as! Int, success: {
+                self.tweet.retweetCount = self.tweet.retweetCount! - 1
+                self.retweetCountLabel.text = "\(Int(self.tweet.retweetCount!))"
+                self.retweetCountLabel.textColor = UIColor.gray
+                self.tweet.isRetweeted = !self.tweet.isRetweeted
+                self.retweetButton.setImage(UIImage(named: "retweet"), for: .normal)
+            }, failure: { (error: NSError) in
+                print(error.localizedDescription)
+            })
+        }
+        else {
+            TwitterClient.sharedInstance?.retweet(id: tweet.id as! Int, success: {
+                self.tweet.retweetCount = self.tweet.retweetCount! + 1
+                self.retweetCountLabel.text = "\(Int(self.tweet.retweetCount!))"
+                self.retweetCountLabel.textColor = UIColor.red
+                self.tweet.isRetweeted = !self.tweet.isRetweeted
+                self.retweetButton.setImage(UIImage(named: "retweet_on"), for: .normal)
+            }, failure: { (error: NSError) in
+                print(error.localizedDescription)
+            })
+        }
     }
-    */
-
+    
+    @IBAction func onFavorite(_ sender: UIButton) {
+        if tweet.isFavorited {
+            TwitterClient.sharedInstance?.unFavoriteTweet(id: tweet.id as! Int, success: {
+                self.tweet.favoriteCount = self.tweet.favoriteCount! - 1
+                self.favoriteCountLabel.text = "\(Int(self.tweet.favoriteCount!))"
+                self.favoriteCountLabel.textColor = UIColor.gray
+                self.tweet.isFavorited = !self.tweet.isFavorited
+                self.favoriteButton.setImage(UIImage(named: "favorite"), for: .normal)
+                
+            }, failure: { (error: NSError) in
+                print(error.localizedDescription)
+            })
+        }
+        else{
+            TwitterClient.sharedInstance?.favoriteTweet(id: tweet.id as! Int, success: {
+                self.tweet.favoriteCount = self.tweet.favoriteCount! + 1
+                self.favoriteCountLabel.text = "\(Int(self.tweet.favoriteCount!))"
+                self.favoriteCountLabel.textColor = UIColor.red
+                self.tweet.isFavorited = !self.tweet.isFavorited
+                self.favoriteButton.setImage(UIImage(named: "favorite_on"), for: .normal)
+            }, failure: { (error: NSError) in
+                print(error.localizedDescription)
+            })
+        }
+    }
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

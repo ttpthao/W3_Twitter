@@ -106,11 +106,6 @@ extension ComposeViewController: UITextViewDelegate {
             tweetButton.alpha = 1
             tweetButton.isEnabled = true
         }
-//        else {
-//            tweetButton.isEnabled = false
-//            tweetButton.backgroundColor = UIColor.lightGray
-//            tweetButton.setTitleColor(blueColor, for: UIControlState.disabled)
-//        }
     }
     
     func textViewShouldBeginEditing(aTextView: UITextView) -> Bool

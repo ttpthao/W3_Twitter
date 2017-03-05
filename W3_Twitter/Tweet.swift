@@ -9,6 +9,7 @@
 import UIKit
 
 class Tweet: NSObject {
+    var id: NSNumber?
     var user: User?
     var text: String?
     var createdAtString: String?
@@ -23,7 +24,7 @@ class Tweet: NSObject {
     
     
     init(dictionary: NSDictionary) {
-        
+        id = dictionary["id"] as? NSNumber!
         user = User(dictionary: dictionary["user"] as! NSDictionary)
         text = dictionary["text"] as? String
         createdAtString = dictionary["created_at"] as? String
@@ -45,6 +46,14 @@ class Tweet: NSObject {
             timeSinceCreated = String(Int(elapsedTime / 60 / 60 / 24)) + "d"
         }
         
+        if let favorited = dictionary["favorited"] as? Bool {
+            self.isFavorited = favorited
+        }
+        
+        if let reTweet = dictionary["reTweet"] as? Bool{
+            self.isRetweeted = reTweet
+        }
+        
         if let media = dictionary.value(forKeyPath: "entities.media") as? [NSDictionary] {
             for image in media {
                 if let urlString = image["media_url"] as? String {
@@ -52,7 +61,6 @@ class Tweet: NSObject {
                 }
             }
         }
-        
     }
     
     class func tweetsWithArray(_ array: [NSDictionary]) -> [Tweet] {

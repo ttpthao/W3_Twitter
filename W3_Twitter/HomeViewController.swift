@@ -86,17 +86,9 @@ class HomeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "detailsSegue" {
-//            let indexPath = self.tweetsTable.indexPathForSelectedRow?.row
-//            if let detailsVc = segue.destination as? DetailsViewController{
-//                detailsVc.tweet = tweets[indexPath!]
-//                print(tweets[indexPath!])
-//            }
-//        }
         let navigationController = segue.destination as! UINavigationController
         if navigationController.topViewController is DetailsViewController {
             let detailViewController = navigationController.topViewController as! DetailsViewController
-            //detailViewController.delegate = self
             
             var indexPath: AnyObject!
             indexPath = tweetsTable.indexPath(for: sender as! UITableViewCell) as AnyObject!

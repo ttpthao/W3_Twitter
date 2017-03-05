@@ -104,4 +104,51 @@ class TwitterClient: BDBOAuth1SessionManager {
             
         })
     }
+    
+    func favoriteTweet(id: Int, success: @escaping ()->(), failure: @escaping (NSError)->()){
+        
+        var parameter: [String: AnyObject] = [:]
+        parameter["id"] = id as AnyObject?
+        post("1.1/favorites/create.json", parameters: parameter, progress: nil, success: { (task: URLSessionDataTask, response) in
+            print("favorite tweet")
+            success()
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error as NSError)
+        })
+    }
+    
+    func unFavoriteTweet(id: Int, success: @escaping ()->(), failure: @escaping (NSError)->()) {
+        post("1.1/favorites/destroy.json", parameters: ["id": id], progress: nil, success: { (task: URLSessionDataTask, response) in
+            print("unfavorite tweet")
+            success()
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error as NSError)
+        })
+    }
+    
+    
+    func retweet(id: Int, success: @escaping ()-> (), failure: @escaping (NSError)->()){
+        //1.1/statuses/retweet/\(id).json"
+        post("1.1/statuses/retweet/\(id).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response) in
+            print("on reTweet")
+            success()
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error as NSError)
+        })
+        
+    }
+    
+    func unRetweet(id: Int, success: @escaping ()-> (), failure: @escaping (NSError)->()){
+        //1.1/statuses/retweet/\(id).json"
+        post("1.1/statuses/unretweet/\(id).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response) in
+            print("un retweet")
+            success()
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error as NSError)
+        })
+    }
 }
