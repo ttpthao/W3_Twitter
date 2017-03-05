@@ -47,14 +47,14 @@ class ComposeViewController: UIViewController {
     }
     
     func customizeBarButton(){
-        var avatar = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 28))
+        let avatar = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 28))
         avatar.setImageWith((User.currentUser?.profileImageUrl)!)
         
-        var button: UIButton = UIButton()
+        let button: UIButton = UIButton()
         button.setImage(avatar.image, for: .normal)
         button.frame = CGRectMake(0, 0, 28, 28)
         
-        var leftBarButtonItem: UIBarButtonItem = UIBarButtonItem()
+        let leftBarButtonItem: UIBarButtonItem = UIBarButtonItem()
         leftBarButtonItem.customView = button
         leftBarButtonItem.customView?.layer.cornerRadius = 11
         leftBarButtonItem.customView?.layer.masksToBounds = true
@@ -102,7 +102,6 @@ extension ComposeViewController: UITextViewDelegate {
             else {
                 limitLabel.textColor = UIColor.black
             }
-            print("\(tweetText.text.characters.count)")
             tweetButton.alpha = 1
             tweetButton.isEnabled = true
         }
@@ -141,7 +140,7 @@ extension ComposeViewController: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newLength = textView.text.utf16.count + text.utf16.count - range.length
-        print(newLength)
+        
         if newLength > 0 // have text, so don't show the placeholder
         {
             if newLength > limit {
@@ -164,18 +163,15 @@ extension ComposeViewController: UITextViewDelegate {
     }
     
     func onShowKeyboard(_ notification: NSNotification){
+        
         var userInfo = notification.userInfo!
         let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
-        UIView.animate(withDuration: 0.3, animations: { () -> Void in
-            self.bottomConstraint.constant = keyboardFrame.size.height
-        })
+        self.bottomConstraint.constant = keyboardFrame.size.height
     }
     
     func onHideKeyBoard(_ notification: NSNotification){
-        UIView.animate(withDuration: 0.3, animations: { () -> Void in
-            self.bottomConstraint.constant = 0
-        })
+        self.bottomConstraint.constant = 0
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
