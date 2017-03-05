@@ -75,7 +75,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="123"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pzv-zx-n5M" id="hXg-Uo-egt">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="122"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="122.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="avaImage" translatesAutoresizingMaskIntoConstraints="NO" id="hUT-YE-lfM">
@@ -225,6 +225,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="What's happening?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="q9H-mC-slK">
+                                <rect key="frame" x="5" y="64" width="310" height="467"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="41z-DU-Cvy">
                                 <rect key="frame" x="0.0" y="536" width="320" height="32"/>
                                 <subviews>
@@ -262,23 +268,16 @@
                                     <constraint firstItem="NOY-37-FaW" firstAttribute="centerY" secondItem="zbI-5b-cpy" secondAttribute="centerY" id="t97-Iq-JJk"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="What's happening?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="q9H-mC-slK">
-                                <rect key="frame" x="0.0" y="64" width="320" height="440"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="41z-DU-Cvy" secondAttribute="trailing" id="2dS-lH-ZqJ"/>
-                            <constraint firstItem="41z-DU-Cvy" firstAttribute="top" secondItem="q9H-mC-slK" secondAttribute="bottom" constant="32" id="D5N-I6-y78"/>
-                            <constraint firstAttribute="trailing" secondItem="q9H-mC-slK" secondAttribute="trailing" id="Frz-CV-gDa"/>
-                            <constraint firstItem="q9H-mC-slK" firstAttribute="top" secondItem="YSQ-Me-aec" secondAttribute="bottom" id="PCN-8e-JvH"/>
-                            <constraint firstItem="out-bH-TRS" firstAttribute="top" secondItem="41z-DU-Cvy" secondAttribute="bottom" id="QX1-F9-cvL" userLabel="Bottom Constraint"/>
-                            <constraint firstItem="q9H-mC-slK" firstAttribute="leading" secondItem="3HN-aW-o9q" secondAttribute="leading" id="aVG-cz-AKK"/>
-                            <constraint firstAttribute="bottom" secondItem="41z-DU-Cvy" secondAttribute="bottom" id="q1p-er-App"/>
-                            <constraint firstItem="41z-DU-Cvy" firstAttribute="leading" secondItem="3HN-aW-o9q" secondAttribute="leading" id="zeO-lu-kFo"/>
+                            <constraint firstItem="41z-DU-Cvy" firstAttribute="leading" secondItem="3HN-aW-o9q" secondAttribute="leading" id="2qU-kZ-5HV"/>
+                            <constraint firstAttribute="trailing" secondItem="q9H-mC-slK" secondAttribute="trailing" constant="5" id="3nw-H1-nHY"/>
+                            <constraint firstItem="q9H-mC-slK" firstAttribute="top" secondItem="YSQ-Me-aec" secondAttribute="bottom" id="IsD-is-r7B"/>
+                            <constraint firstItem="41z-DU-Cvy" firstAttribute="top" secondItem="q9H-mC-slK" secondAttribute="bottom" constant="5" id="Ozt-bT-jPw"/>
+                            <constraint firstItem="out-bH-TRS" firstAttribute="top" secondItem="41z-DU-Cvy" secondAttribute="bottom" id="VbF-fY-GNF" userLabel="Bottom Height Constraint"/>
+                            <constraint firstAttribute="trailing" secondItem="41z-DU-Cvy" secondAttribute="trailing" id="iCf-Pm-Web"/>
+                            <constraint firstItem="q9H-mC-slK" firstAttribute="leading" secondItem="3HN-aW-o9q" secondAttribute="leading" constant="5" id="qFA-M5-0wZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Compose" id="F2S-Xv-3R0">
@@ -290,7 +289,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="bottomConstraint" destination="QX1-F9-cvL" id="N4I-JY-hSz"/>
+                        <outlet property="bottomConstraint" destination="VbF-fY-GNF" id="12h-5N-6iC"/>
                         <outlet property="limitLabel" destination="zbI-5b-cpy" id="9eE-VX-wuO"/>
                         <outlet property="tweetButton" destination="NOY-37-FaW" id="8wv-6y-CAI"/>
                         <outlet property="tweetText" destination="q9H-mC-slK" id="09D-yb-Rpm"/>
